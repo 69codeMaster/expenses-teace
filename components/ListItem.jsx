@@ -1,6 +1,6 @@
 import { View, Text, StyleSheet, Pressable } from "react-native";
 import { GlobalStyles } from "../constant/styles";
-import { hypenedDate } from "./utils/formaters";
+import { hypenedDate } from "../utils/formaters";
 export default function ListItem({ description, date, amount }) {
   function expensePressHandler() {}
   return (
