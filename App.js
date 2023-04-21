@@ -2,41 +2,74 @@ import "react-native-gesture-handler";
 import { createDrawerNavigator } from "@react-navigation/drawer";
 import { createStackNavigator } from "@react-navigation/stack";
 import { NavigationContainer } from "@react-navigation/native";
-import { createMaterialBottomTabNavigator } from "@react-navigation/material-bottom-tabs";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import { Ionicons } from "@expo/vector-icons";
 
 import { StatusBar } from "expo-status-bar";
-import { StyleSheet, Text, View } from "react-native";
-import { useState, useEffect } from "react";
+import { StyleSheet } from "react-native";
 
 import RecentExpenses from "./screens/RecentExpenses";
 import AllExpenses from "./screens/AllExpenses";
+import IconButton from "./components/UI/IconButton";
+
+import { GlobalStyles } from "./constant/styles";
+import { Ionicons } from "@expo/vector-icons";
 
 export default function App() {
   const Drawer = createDrawerNavigator();
   const Stack = createStackNavigator();
-  const BottomTabs = createMaterialBottomTabNavigator();
-  const [currentTab, setCurrentTab] = useState("Recent Expenses");
+  const BottomTabs = createBottomTabNavigator();
 
   function ExpensesOverview() {
     return (
-      <BottomTabs.Navigator>
+      <BottomTabs.Navigator
+        screenOptions={{
+          headerStyle: { backgroundColor: GlobalStyles.colors.primary500 },
+          headerTintColor: "white",
+          tabBarColor: GlobalStyles.colors.primary500,
+          tabBarStyle: {
+            backgroundColor: GlobalStyles.colors.primary500,
+            height: 55,
+            paddingBottom: 5,
+          },
+          tabBarActiveTintColor: GlobalStyles.colors.accent500,
+        }}>
         <BottomTabs.Screen
-          name="Recent Expenses"
+          name="RecentExpenses"
           component={RecentExpenses}
-          listeners={{
-            tabPress: ({ target }) => {
-              setCurrentTab(target.split("-")[0]);
+          options={{
+            title: "Recent Expenses",
+            tabBarLabel: "Recent",
+            tabBarIcon: ({ color, size }) => (
+              <Ionicons color={color} size={size} name="hourglass" />
+            ),
+            tabBarLabelStyle: {
+              fontSize: 12,
             },
+            headerTitleStyle: {
+              fontSize: 22,
+            },
+            headerRight: ({ tintColor }) => (
+              <IconButton
+                color={"white"}
+                size={30}
+                name="add"
+                onPress={() => console.log("pressed")}
+              />
+            ),
           }}
         />
+
         <BottomTabs.Screen
-          name="All Expenses"
+          name="AllExpenses"
           component={AllExpenses}
-          listeners={{
-            tabPress: ({ target }) => {
-              setCurrentTab(target.split("-")[0]);
+          options={{
+            title: "All Expenses",
+            tabBarLabel: "All Expenses",
+            tabBarIcon: ({ color, size }) => (
+              <Ionicons color={color} size={size} name="calendar-outline" />
+            ),
+            tabBarLabelStyle: {
+              fontSize: 12,
             },
           }}
         />
@@ -47,34 +80,13 @@ export default function App() {
   return (
     <>
       <StatusBar style="light" />
-      <NavigationContainer style={styles.container}>
+      <NavigationContainer>
         <Stack.Navigator
           screenOptions={{
-            headerStyle: { backgroundColor: "#7e5cfc" },
-            headerTintColor: "white",
+            headerShown: false,
           }}>
-          <Stack.Screen
-            name="ExpensesOverview"
-            component={ExpensesOverview}
-            options={{ title: currentTab }}
-          />
-          <Stack.Screen
-            component={RecentExpenses}
-            name={"Recent Expences"}
-            options={{
-              headerTitleStyle: {
-                fontSize: 22,
-              },
-              headerRight: () => (
-                <Ionicons
-                  name="add-outline"
-                  color={"white"}
-                  size={30}
-                  style={styles.icon}
-                />
-              ),
-            }}
-          />
+          <Stack.Screen name="ExpensesOverview" component={ExpensesOverview} />
+          <Stack.Screen component={RecentExpenses} name={"Recent Expences"} />
         </Stack.Navigator>
       </NavigationContainer>
     </>
