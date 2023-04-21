@@ -40,7 +40,7 @@ export default function App() {
             title: "Recent Expenses",
             tabBarLabel: "Recent",
             tabBarIcon: ({ color, size }) => (
-              <Ionicons color={color} size={size} name="hourglass" />
+              <Ionicons color={color} size={size} name="hourglass-outline" />
             ),
             tabBarLabelStyle: {
               fontSize: 12,
@@ -48,7 +48,7 @@ export default function App() {
             headerTitleStyle: {
               fontSize: 22,
             },
-            headerRight: ({ tintColor }) => (
+            headerRight: () => (
               <IconButton
                 color={"white"}
                 size={30}
