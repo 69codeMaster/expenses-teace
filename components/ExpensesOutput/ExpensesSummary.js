@@ -1,7 +1,9 @@
 import { View, Text, StyleSheet } from "react-native";
 import { GlobalStyles } from "../../constant/styles";
+
 export default function ExpensesSummary({ periodName, expenses }) {
-  const sum = expenses.reduce((sum, expenses) => sum + expenses.amount, 0);
+  const sum = expenses.reduce((sum, expense) => sum + expense.amount, 0);
+  console.log("sum" + sum);
   return (
     <View style={styles.container}>
       <Text style={styles.period}>{periodName}</Text>

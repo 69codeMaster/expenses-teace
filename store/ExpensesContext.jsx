@@ -76,24 +76,24 @@ export const ExpensesContext = createContext({
 function expensesReducer(state, action) {
   switch (action.type) {
     case "ADD":
-      {
-        const id = new Date().toISOString();
-        return [{ ...action.payload, id: id }, ...state];
-      }
+      const id = new Date().toISOString();
+      return [{ ...action.payload, id: id }, ...state];
       break;
     case "UPDATE":
       const indexToUpdate = state.findIndex(
         (expense) => expense.id === action.payload.id
       );
+      const updateableExpense = state[indexToUpdate];
       const updatedItem = {
-        ...state[indexToUpdate],
+        ...updateableExpense,
         ...action.payload.expenseData,
       };
-      const updatedState = { ...state };
+      const updatedState = [...state];
       updatedState[indexToUpdate] = updatedItem;
       return updatedState;
       break;
-      [...state.filter((expense) => expense.id !== action.payload)];
+    case "DELETE":
+      return [...state.filter((expense) => expense.id !== action.payload)];
       break;
 
     default:

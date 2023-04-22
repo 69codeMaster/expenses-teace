@@ -2,18 +2,13 @@ import { View, StyleSheet } from "react-native";
 import ExpensesList from "./ExpensesList";
 import ExpensesSummary from "./ExpensesSummary";
 import { GlobalStyles } from "../../constant/styles";
-import { useContext } from "react";
-import { ExpensesContext } from "../../store/ExpensesContext";
 
 export default function ExpensesOutput({ expenses, periodName }) {
-  const expensesCtx = useContext(ExpensesContext);
+  console.log(expenses);
   return (
     <View style={styles.container}>
-      <ExpensesSummary
-        periodName={periodName}
-        expenses={expensesCtx.expenses}
-      />
-      <ExpensesList expenses={expensesCtx.expenses} />
+      <ExpensesSummary periodName={periodName} expenses={expenses} />
+      <ExpensesList expenses={expenses} />
     </View>
   );
 }

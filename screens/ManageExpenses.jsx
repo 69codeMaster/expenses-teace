@@ -1,4 +1,4 @@
-import { View, StyleSheet, Pressable, Text } from "react-native";
+import { View, StyleSheet } from "react-native";
 import { useLayoutEffect, useContext } from "react";
 import IconButton from "../components/UI/IconButton";
 import Button from "../components/UI/Button";
@@ -20,9 +20,17 @@ export default function ManageExpenses({ route, navigation }) {
     navigation.goBack();
   }
   function confirmHandler() {
+    if (isEditing) {
+      expenseCtx.updateExpense(params.expenseId, {
+        description: "test",
+        amount: 99,
+        date: new Date(),
+      });
+    }
     navigation.goBack();
   }
   function deleteExpenseHandler() {
+    expenseCtx.deleteExpense(params.expenseId);
     navigation.goBack();
   }
 
