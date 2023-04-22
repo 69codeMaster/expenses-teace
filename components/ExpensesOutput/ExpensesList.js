@@ -4,6 +4,7 @@ export default function ExpensesList({ expenses }) {
   function renderExpenseItem({ item }) {
     return <ListItem {...item} />;
   }
+
   return (
     <FlatList
       data={expenses}
