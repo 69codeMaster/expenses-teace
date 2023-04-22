@@ -9,10 +9,11 @@ import { StyleSheet } from "react-native";
 
 import RecentExpenses from "./screens/RecentExpenses";
 import AllExpenses from "./screens/AllExpenses";
-import IconButton from "./components/UI/IconButton";
+import ManageExpenses from "./screens/ManageExpenses";
 
-import { GlobalStyles } from "./constant/styles";
 import { Ionicons } from "@expo/vector-icons";
+import IconButton from "./components/UI/IconButton";
+import { GlobalStyles } from "./constant/styles";
 
 export default function App() {
   const Drawer = createDrawerNavigator();
@@ -36,7 +37,7 @@ export default function App() {
         <BottomTabs.Screen
           name="RecentExpenses"
           component={RecentExpenses}
-          options={{
+          options={({ navigation }) => ({
             title: "Recent Expenses",
             tabBarLabel: "Recent",
             tabBarIcon: ({ color, size }) => (
@@ -53,10 +54,12 @@ export default function App() {
                 color={"white"}
                 size={30}
                 name="add"
-                onPress={() => console.log("pressed")}
+                onPress={() =>
+                  navigation.navigate("ManageExpenses", { mode: "create" })
+                }
               />
             ),
-          }}
+          })}
         />
 
         <BottomTabs.Screen
@@ -83,10 +86,17 @@ export default function App() {
       <NavigationContainer>
         <Stack.Navigator
           screenOptions={{
-            headerShown: false,
+            headerStyle: {
+              backgroundColor: GlobalStyles.colors.primary500,
+            },
+            headerTintColor: "white",
           }}>
-          <Stack.Screen name="ExpensesOverview" component={ExpensesOverview} />
-          <Stack.Screen component={RecentExpenses} name={"Recent Expences"} />
+          <Stack.Screen
+            name="ExpensesOverview"
+            component={ExpensesOverview}
+            options={{ headerShown: false }}
+          />
+          <Stack.Screen name={"ManageExpenses"} component={ManageExpenses} />
         </Stack.Navigator>
       </NavigationContainer>
     </>

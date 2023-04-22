@@ -1,8 +1,15 @@
 import { View, Text, StyleSheet, Pressable } from "react-native";
 import { GlobalStyles } from "../constant/styles";
-import { hypenedDate } from "../utils/formaters";
+import { getFormattedDate } from "../utils/date";
+import { useNavigation } from "@react-navigation/native";
+
 export default function ListItem({ description, date, amount }) {
-  function expensePressHandler() {}
+  const navigation = useNavigation();
+  function expensePressHandler() {
+    navigation.navigate("ManageExpenses", {
+      mode: "edit",
+    });
+  }
   return (
     <View style={styles.outerContiner}>
       <Pressable
@@ -12,9 +19,9 @@ export default function ListItem({ description, date, amount }) {
         <View style={styles.innerContainer}>
           <View>
             <Text style={styles.description}>{description} </Text>
-            <Text style={styles.date}>{hypenedDate(date)}</Text>
+            <Text style={styles.date}>{getFormattedDate(date)}</Text>
           </View>
-          <Text style={styles.amount}>${amount}</Text>
+          <Text style={styles.amount}>${amount.toFixed(2)}</Text>
         </View>
       </Pressable>
     </View>
