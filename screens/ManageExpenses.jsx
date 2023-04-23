@@ -20,8 +20,14 @@ export default function ManageExpenses({ route, navigation }) {
     navigation.goBack();
   }
   function confirmHandler() {
-    if (isEditing) {
+    if (isEditing)
       expenseCtx.updateExpense(params.expenseId, {
+        description: "test",
+        amount: 99,
+        date: new Date(),
+      });
+    else {
+      expenseCtx.addExpense({
         description: "test",
         amount: 99,
         date: new Date(),
@@ -58,7 +64,6 @@ export default function ManageExpenses({ route, navigation }) {
       </View>
     );
   }
-
   return <ScreenContent />;
 }
 

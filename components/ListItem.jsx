@@ -1,10 +1,15 @@
 import { View, Text, StyleSheet, Pressable } from "react-native";
+import { useContext } from "react";
 import { GlobalStyles } from "../constant/styles";
 import { getFormattedDate } from "../utils/date";
 import { useNavigation } from "@react-navigation/native";
+import { TapGestureHandler } from "react-native-gesture-handler";
+import { ExpensesContext } from "../store/ExpensesContext";
 
 export default function ListItem({ id, description, date, amount }) {
   const navigation = useNavigation();
+  const { deleteExpense } = useContext(ExpensesContext);
+
   function expensePressHandler() {
     navigation.navigate("ManageExpenses", {
       mode: "edit",
@@ -13,18 +18,19 @@ export default function ListItem({ id, description, date, amount }) {
   }
   return (
     <View style={styles.outerContiner}>
-      <Pressable
-        // style={({ pressed }) => pressed && { opacity: 0.75 }}
-        onPress={expensePressHandler}
-        android_ripple={{ color: "#6b47c175" }}>
-        <View style={styles.innerContainer}>
-          <View>
-            <Text style={styles.description}>{description} </Text>
-            <Text style={styles.date}>{getFormattedDate(date)}</Text>
+      <TapGestureHandler numberOfTaps={2} onActivated={() => deleteExpense(id)}>
+        <Pressable
+          // onPress={/}
+          android_ripple={{ color: "#6b47c175" }}>
+          <View style={styles.innerContainer}>
+            <View>
+              <Text style={styles.description}>{description} </Text>
+              <Text style={styles.date}>{getFormattedDate(date)}</Text>
+            </View>
+            <Text style={styles.amount}>${amount.toFixed(2)}</Text>
           </View>
-          <Text style={styles.amount}>${amount.toFixed(2)}</Text>
-        </View>
-      </Pressable>
+        </Pressable>
+      </TapGestureHandler>
     </View>
   );
 }
