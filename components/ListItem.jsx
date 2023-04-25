@@ -20,7 +20,7 @@ export default function ListItem({ id, description, date, amount }) {
     <View style={styles.outerContiner}>
       <TapGestureHandler numberOfTaps={2} onActivated={() => deleteExpense(id)}>
         <Pressable
-          // onPress={/}
+          // onPress={expensePressHandler}
           android_ripple={{ color: "#6b47c175" }}>
           <View style={styles.innerContainer}>
             <View>

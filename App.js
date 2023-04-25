@@ -35,7 +35,8 @@ export default function App() {
             paddingBottom: 5,
           },
           tabBarActiveTintColor: GlobalStyles.colors.accent500,
-        }}>
+        }}
+        initialRouteName="AllExpenses">
         <BottomTabs.Screen
           name="RecentExpenses"
           component={RecentExpenses}
