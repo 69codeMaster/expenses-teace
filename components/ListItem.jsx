@@ -18,19 +18,19 @@ export default function ListItem({ id, description, date, amount }) {
   }
   return (
     <View style={styles.outerContiner}>
-      <TapGestureHandler numberOfTaps={2} onActivated={() => deleteExpense(id)}>
-        <Pressable
-          // onPress={expensePressHandler}
-          android_ripple={{ color: "#6b47c175" }}>
-          <View style={styles.innerContainer}>
-            <View>
-              <Text style={styles.description}>{description} </Text>
-              <Text style={styles.date}>{getFormattedDate(date)}</Text>
-            </View>
-            <Text style={styles.amount}>${amount.toFixed(2)}</Text>
+      {/* <TapGestureHandler numberOfTaps={2} onActivated={() => deleteExpense(id)}> */}
+      <Pressable
+        onPress={expensePressHandler}
+        android_ripple={{ color: "#6b47c175" }}>
+        <View style={styles.innerContainer}>
+          <View>
+            <Text style={styles.description}>{description} </Text>
+            <Text style={styles.date}>{getFormattedDate(date)}</Text>
           </View>
-        </Pressable>
-      </TapGestureHandler>
+          <Text style={styles.amount}>${amount.toFixed(2)}</Text>
+        </View>
+      </Pressable>
+      {/* </TapGestureHandler> */}
     </View>
   );
 }

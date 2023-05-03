@@ -4,6 +4,7 @@ import IconButton from "../components/UI/IconButton";
 import Button from "../components/UI/Button";
 import { GlobalStyles } from "../constant/styles";
 import { ExpensesContext } from "../store/ExpensesContext";
+import ExpenseForm from "../components/MangeExpense/ExpenseForm";
 
 export default function ManageExpenses({ route, navigation }) {
   const params = route.params;
@@ -19,19 +20,10 @@ export default function ManageExpenses({ route, navigation }) {
   function cancelHandler() {
     navigation.goBack();
   }
-  function confirmHandler() {
-    if (isEditing)
-      expenseCtx.updateExpense(params.expenseId, {
-        description: "test",
-        amount: 99,
-        date: new Date(),
-      });
+  function confirmHandler(expenseData) {
+    if (isEditing) expenseCtx.updateExpense(params.expenseId, expenseData);
     else {
-      expenseCtx.addExpense({
-        description: "test",
-        amount: 99,
-        date: new Date(),
-      });
+      expenseCtx.addExpense(expenseData);
     }
     navigation.goBack();
   }
@@ -43,14 +35,11 @@ export default function ManageExpenses({ route, navigation }) {
   function ScreenContent() {
     return (
       <View style={styles.screenRoot}>
-        <View style={styles.buttonContainer}>
-          <Button style={styles.button} mode="flat" onPress={cancelHandler}>
-            Cancel
-          </Button>
-          <Button style={styles.button} onPress={confirmHandler}>
-            {isEditing ? "Update" : "Create"}
-          </Button>
-        </View>
+        <ExpenseForm
+          onCancel={cancelHandler}
+          onSubmit={confirmHandler}
+          isEditing={isEditing}
+        />
         {isEditing && (
           <View style={styles.deleteContainer}>
             <IconButton
@@ -72,10 +61,6 @@ const styles = StyleSheet.create({
     flex: 1,
     padding: 24,
     backgroundColor: GlobalStyles.colors.primary800,
-  },
-  buttonContainer: {
-    flexDirection: "row",
-    justifyContent: "space-around",
   },
 
   deleteContainer: {
